@@ -1,0 +1,17 @@
+section.present pre {
+  font-size: 0.85em;
+}
+
+.reveal section img.natural-image {
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.reveal section img.scale-width-65 {
+  width: 65%;
+}
+
+.reveal pre code {
+  max-height: 1000px;
+}
