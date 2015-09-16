@@ -1,0 +1,434 @@
+<section>
+
+<!-- Bring a TedX "poster" -->
+
+<p><img class="natural-image" src="images/tb-logo.png"></p>
+<pre><code class="ruby">include Trialbee
+
+author = Presenter.new(:jacob)
+slides = Portal::Slides.new
+
+wait until author.ready?
+
+author.present(slides) do |slide|
+  print slide
+  any_questions? if slide.last?
+end
+</code></pre>
+</section>
+<section>
+
+<h1>First of all thank you</h1>
+
+</section>
+<section>
+
+<h2>Jacob Burenstam</h2>
+
+<ul>
+<li>Full stack developer</li>
+<li>OSS tinkerer</li>
+<li>Bitcoin.org translator</li>
+<li>Useless code enthusiast</li>
+</ul>
+
+<p></p>
+<hr>
+
+<ul>
+<li>GitHub: <a href="https://github.com/buren">github.com/buren</a>
+</li>
+<li>Keybase: <a href="https://keybase.io/buren">keybase.io/buren</a>
+</li>
+</ul>
+
+</section>
+<section>
+
+<h2>Full stack developer?</h2>
+
+<p><img src="images/full-stack-developer.jpg" alt="Full stack developer"></p>
+<aside class="notes">Full stack can mean pretty much whatever these days.
+</aside>
+</section>
+<section>
+
+<h2>Langs &amp; Tools</h2>
+
+<p>Started out with Java @ LTH.</p>
+
+<ul>
+<li>Ruby</li>
+<li>JavaScript</li>
+<li>Clojure</li>
+</ul>
+
+</section>
+<section>
+
+<h2>Libraries</h2>
+
+<ul>
+<li>meta-secretary</li>
+<li>Wayback archive</li>
+<li>SiteMapper</li>
+<li>Chartkick.js</li>
+<li>git-story</li>
+</ul>
+<aside class="notes">* Track deployments
+
+* Send URLs to Wayback Machine
+
+* Map all links on a site
+
+* JavaScript charting library
+
+* Normalized git environment &amp; utils
+</aside>
+</section>
+<section>
+
+<h2>Slides available on</h2>
+<pre><code>please-open() {
+ xdg-open "$1" || open "$1" # Ubuntu or OSX
+}
+
+slides='http://jacobburenstam.com/abh'
+please-open slides
+
+github='https://github.com/buren/abh'
+please-open github
+</code></pre>
+</section>
+<section>
+
+<h1>Always be hacking</h1>
+
+<p><img src="images/always-be-closing.gif" alt="Always be closing GIF"></p>
+<aside class="notes">Hack on everything.
+</aside>
+</section>
+<section>
+
+<h1>Background</h1>
+
+<ul>
+<li>Never programmed before</li>
+<li>Failed first two programming exams
+
+<ul>
+<li>Believe me, <em>really</em> try not to..</li>
+</ul>
+</li>
+</ul>
+<aside class="notes">Saw my first line of code the first day of uni.
+
+</aside>
+</section>
+<section>
+
+<h1>Story</h1>
+
+</section>
+<section>
+
+<h2>How I ended up writing</h2>
+
+<h2>a <code>Brainfuck</code> interpreter..</h2>
+
+</section>
+<section>
+
+<h2>.. in a language that was 22 days old..</h2>
+
+</section>
+<section>
+
+<h2>by a first time language designer</h2>
+
+</section>
+<section>
+
+<h1>So..</h1>
+
+<h3>What is Brainfuck?</h3>
+
+</section>
+<section>
+
+<p>Hello world</p>
+<pre><code>++++++++[&gt;++++[&gt;++&gt;+++&gt;+++&gt;+&lt;&lt;&lt;&lt;-]&gt;+&gt;+&gt;-&gt;&gt;+
+[&lt;]&lt;-]&gt;&gt;.&gt;---.+++++++..+++.&gt;&gt;.&lt;-.&lt;.+++.------
+.--------.&gt;&gt;+.&gt;++.
+</code></pre>
+<p>Brainfuck is a very small Turing-complete language.</p>
+
+</section>
+<section>
+
+<h3>tl;dr:</h3>
+
+<h3>You can program anything with it.</h3>
+
+</section>
+<section>
+
+<h2>Building a Brainfuck intrepreter</h2>
+
+</section>
+<section>
+
+<ol>
+<li>I read Brainfuck intrepreter in Nim blog post.</li>
+<li>Decided to try to build one in Ruby.</li>
+</ol>
+
+<p><a href="https://github.com/buren/bf-interpreter">https://github.com/buren/bf-interpreter</a></p>
+
+<p><img src="images/github-mark.png" alt="GitHub logo" class="octocat"></p>
+
+</section>
+<section>
+
+<h1>A while later</h1>
+
+<h3>"Show HN: Vivaldi programming language"</h3>
+
+<p><a href="https://news.ycombinator.com/item?id=9053694">https://news.ycombinator.com/item?id=9053694</a></p>
+<aside class="notes">There was a lot of discussion going on. I looked at the language examples which was not much more than fizzbuzz. I thought that it could be fun to surprise him by building a Brainfuck intrepreter in his language.
+</aside>
+</section>
+<section>
+
+<p>So I decided to build another Brainfuck intrepreter in his language.</p>
+
+</section>
+<section>
+
+<p>I began hacking..</p>
+
+</section>
+<section>
+
+<p>GitHub Issue #1: "How do I get the nth char of a string?"</p>
+
+<p>"I'm trying to find a way to...? (perhaps I've missed something)"</p>
+<aside class="notes">GitHub issues is for those how don't know a way of reporting bugs and other issues for a repository.
+</aside>
+</section>
+<section>
+
+<h3>"Whoops— I guess I forgot the <code>at()</code> method."</h3>
+
+</section>
+<section>
+
+<p>Probably not an issue with Java..</p>
+
+</section>
+<section>
+
+<h2>Getting started can be easy</h2>
+
+</section>
+<section>
+
+<div id="example-scatter-chart" style="height: 500px; min-width: 310px; max-width: 960px; margin: 0 auto"></div>
+<pre><code class="JavaScript">var data = [[174.0, 80.0], [176.5, 82.3], ...];
+var options = { xtitle: "Length (cm)", ytitle: "Weight (kg)" };
+new Chartkick.ScatterChart("scatter-chart", data, options);
+</code></pre>
+</section>
+<section>
+
+<h1>GitHub</h1>
+
+<p><img src="images/github-mark.png" alt="GitHub logo" class="octocat"></p>
+
+</section>
+<section>
+
+<h2>At GitHub they have something they call "ombuds".</h2>
+
+</section>
+<section>
+
+<p>"Someone how advocates the use and understanding of a particular codebase."</p>
+
+<ul>
+<li>GitHub</li>
+</ul>
+
+</section>
+<section>
+
+<h2>Best practies</h2>
+
+<ol>
+<li>Names are important</li>
+</ol>
+<aside class="notes">If you don't know what to name it you probably don't know what it is.
+</aside>
+</section>
+<section>
+
+<ol>
+<li>Talk to other about your code (and theirs)</li>
+</ol>
+<aside class="notes">Discuss different approaches / Pros and cons
+</aside>
+</section>
+<section>
+
+<p>Programming in a team yields huge advantages, but also some challenges.</p>
+
+</section>
+<section>
+
+<p>What is x?</p>
+<pre><code class="ruby">x = list.first
+# =&gt; anything...
+</code></pre>
+</section>
+<section>
+
+<p>Tell a story</p>
+<pre><code class="ruby">firstInLine = cashierQueue.first
+# =&gt; pretty obvious..
+</code></pre>
+</section>
+<section>
+
+<p>What is readable code?</p>
+
+</section>
+<section>
+
+<h2>Is this readable code?</h2>
+
+<p>Remember the code from the first slide?</p>
+<pre><code class="ruby">include Trialbee
+
+author = Presenter.new(:jacob)
+slides = Portal::Slides.new
+
+wait until author.ready?
+
+author.present(slides) do |slide|
+  print slide
+  any_questions? if slide.last?
+end
+</code></pre>
+</section>
+<section>
+
+<h2>Is this?</h2>
+
+</section>
+<section>
+<pre><code class="ruby">DEADLINE = Time.new(2015, 9, 21, 13, 0, 0).freeze
+module Trialbee;end
+module Trialbee::Portal;end
+String.class_eval   { define_method(:last?) { false } }
+NilClass.class_eval { define_method(:last?) { true } }
+define_method(:wait)       { puts 'Still not ready..';sleep 3 }
+define_method(:any_questions?) { puts 'Any questions?' }
+define_method(:feedback)   { puts 'Feedback?' }
+class Trialbee::Presenter &lt; Struct.new(:name)
+  define_method(:ready?) { Time.now &gt;= DEADLINE }
+  def present(slides); slides.to_a.each { |slide| yield(slide) };end
+end
+class Trialbee::Portal::Slides
+  define_method(:initialize) { @slides = File.read('slides.md').split('---') }
+  define_method(:to_a) { @slides + [nil] }
+end
+</code></pre>
+</section>
+<section>
+
+<h2>It actually runs</h2>
+
+<ul>
+<li><p>Can print the presentation</p></li>
+<li><p><a href="https://gist.github.com/buren/21b05c7ccaa9f8896c07">https://gist.github.com/buren/21b05c7ccaa9f8896c07</a></p></li>
+</ul>
+
+</section>
+<section>
+
+<h2>Howto</h2>
+
+<p>Do your first commit to an open source project.</p>
+
+</section>
+<section>
+
+<ul>
+<li>Translations
+
+<ul>
+<li>Bitcoin.org (please help me)</li>
+<li>PrivacyBadger (please help me)</li>
+<li>Various extensions from EFF</li>
+</ul>
+</li>
+<li>Documentation</li>
+<li>Installation instructions</li>
+<li><a href="https://github.com/trialbee/meta-secretary">meta-secretary</a></li>
+</ul>
+
+</section>
+<section>
+
+<p>If you use an OSS project more than once, read the source code!</p>
+
+</section>
+<section>
+
+<p><img src="images/read-the-source.jpg" alt="Read the source Luke"></p>
+<aside class="notes">All talks need one of these.
+</aside>
+</section>
+<section>
+
+<p>You really don't need to understand much of it.</p>
+
+</section>
+<section>
+
+<h2>Thank you for listening.</h2>
+
+</section>
+<section>
+
+<h1>Any questions?</h1>
+
+<p><img class="natural-image" src="images/tb-logo.png"></p>
+
+</section>
+<section>
+
+<p><img class="natural-image" src="images/tb-logo.png"></p>
+
+<ul>
+<li>GitHub: <a href="https://github.com/buren" class="user-mention">@buren</a>
+</li>
+<li>Keybase: <a href="https://keybase.io/buren">keybase.io/buren</a>
+</li>
+</ul>
+
+<!-- Third party JavaScript dependencies -->
+
+<script src="js/libs/jquery.js"></script>
+
+<script src="js/libs/highcharts.js"></script>
+
+<script src="js/libs/chartkick.js"></script>
+
+<!-- JavaScript for slides.md -->
+
+<script src="js/scatter-chart.js"></script>
+
+<script src="js/resize-hack.js"></script>
+
+</section>
