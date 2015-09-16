@@ -1,3 +1,8 @@
+/* reveal overrides */
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  text-transform: inherit;
+}
+
 section.present pre {
   font-size: 0.85em;
 }
@@ -14,4 +19,16 @@ section.present pre {
 
 .reveal pre code {
   max-height: 1000px;
+}
+
+hr {
+  max-width: 60%;
+}
+
+/* octocat styling */
+.reveal section img.octocat, .reveal section img.hn-logo {
+  margin-bottom: -150px;
+  border-width: 0px;
+  background: transparent;
+  max-width: 150px;
 }

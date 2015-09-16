@@ -58,7 +58,7 @@ wait until author.ready?
 
 author.present(slides) do |slide|
   print slide
-  questions? if slide.last?
+  any_questions? if slide.last?
 end
 </code></pre>
 </section>
@@ -75,9 +75,17 @@ end
 <li>Full stack developer</li>
 <li>OSS tinkerer</li>
 <li>Bitcoin.org translator</li>
-<li><p>Useless code enthusiast</p></li>
-<li><p>GitHub: <a href="https://github.com/buren">github.com/buren</a></p></li>
-<li><p>Keybase: <a href="https://keybase.io/buren">keybase.io/buren</a></p></li>
+<li>Useless code enthusiast</li>
+</ul>
+
+<p></p>
+<hr>
+
+<ul>
+<li>GitHub: <a href="https://github.com/buren">github.com/buren</a>
+</li>
+<li>Keybase: <a href="https://keybase.io/buren">keybase.io/buren</a>
+</li>
 </ul>
 
 </section>
@@ -113,7 +121,16 @@ end
 <li>Chartkick.js</li>
 <li>git-story</li>
 </ul>
+<aside class="notes">* Track deployments
 
+* Send URLs to Wayback Machine
+
+* Map all links on a site
+
+* JavaScript charting library
+
+* Normalized git environment &amp; utils
+</aside>
 </section>
 <section>
 
@@ -161,12 +178,9 @@ please-open github
 </section>
 <section>
 
-<h2>How I ended up writing..</h2>
+<h2>How I ended up writing</h2>
 
-</section>
-<section>
-
-<h2>a Brainfuck interpreter..</h2>
+<h2>a <code>Brainfuck</code> interpreter..</h2>
 
 </section>
 <section>
@@ -188,26 +202,36 @@ please-open github
 </section>
 <section>
 
-<p>Hello world?</p>
+<p>Hello world</p>
 <pre><code>++++++++[&gt;++++[&gt;++&gt;+++&gt;+++&gt;+&lt;&lt;&lt;&lt;-]&gt;+&gt;+&gt;-&gt;&gt;+
 [&lt;]&lt;-]&gt;&gt;.&gt;---.+++++++..+++.&gt;&gt;.&lt;-.&lt;.+++.------
 .--------.&gt;&gt;+.&gt;++.
 </code></pre>
-<p>Is a very small Turing-complete language..</p>
+<p>Brainfuck is a very small Turing-complete language.</p>
+
+</section>
+<section>
+
+<h3>tl;dr:</h3>
+
+<h3>You can program anything with it.</h3>
 
 </section>
 <section>
 
 <h2>Building a Brainfuck intrepreter</h2>
 
-<p>Blog post about a new system language called Nim.</p>
-
 </section>
 <section>
 
-<p>I built one in Ruby.</p>
+<ol>
+<li>I read Brainfuck intrepreter in Nim blog post.</li>
+<li>Decided to try to build one in Ruby.</li>
+</ol>
 
 <p><a href="https://github.com/buren/bf-interpreter">https://github.com/buren/bf-interpreter</a></p>
+
+<p><img src="images/github-mark.png" alt="GitHub logo" class="octocat"></p>
 
 </section>
 <section>
@@ -245,7 +269,7 @@ please-open github
 </section>
 <section>
 
-<p>Probably not an issue with Java <img class="emoji" title=":trollface:" alt=":trollface:" src="https://assets-cdn.github.com/images/icons/emoji/trollface.png" align="absmiddle"></p>
+<p>Probably not an issue with Java..</p>
 
 </section>
 <section>
@@ -255,9 +279,9 @@ please-open github
 </section>
 <section>
 
-<div id="scatter-chart"></div>
+<div id="example-scatter-chart" style="height: 500px; min-width: 310px; max-width: 960px; margin: 0 auto"></div>
 <pre><code class="JavaScript">var data = [[174.0, 80.0], [176.5, 82.3], ...];
-var options = { xtitle: 'Length (cm)', ytitle: 'Weight (kg)' };
+var options = { xtitle: "Length (cm)", ytitle: "Weight (kg)" };
 new Chartkick.ScatterChart("scatter-chart", data, options);
 </code></pre>
 </section>
@@ -265,13 +289,13 @@ new Chartkick.ScatterChart("scatter-chart", data, options);
 
 <h1>GitHub</h1>
 
+<p><img src="images/github-mark.png" alt="GitHub logo" class="octocat"></p>
+
 </section>
-<section>
 <section>
 
 <h2>At GitHub they have something they call "ombuds".</h2>
 
-</section>
 </section>
 <section>
 
@@ -284,21 +308,40 @@ new Chartkick.ScatterChart("scatter-chart", data, options);
 </section>
 <section>
 
+<h2>Best practies</h2>
+
+<ol>
+<li>Names are important</li>
+</ol>
+<aside class="notes">If you don't know what to name it you probably don't know what it is.
+</aside>
+</section>
+<section>
+
+<ol>
+<li>Talk to other about your code (and theirs)</li>
+</ol>
+<aside class="notes">Discuss different approaches / Pros and cons
+</aside>
+</section>
+<section>
+
 <p>Programming in a team yields huge advantages, but also some challenges.</p>
 
 </section>
 <section>
 
 <p>What is x?</p>
-<pre><code class="ruby">x =
+<pre><code class="ruby">x = list.first
+# =&gt; anything...
 </code></pre>
 </section>
 <section>
 
-<ul>
-<li>How many of you have programmed with others before?</li>
-</ul>
-
+<p>Tell a story</p>
+<pre><code class="ruby">firstInLine = cashierQueue.first
+# =&gt; pretty obvious..
+</code></pre>
 </section>
 <section>
 
@@ -319,7 +362,7 @@ wait until author.ready?
 
 author.present(slides) do |slide|
   print slide
-  questions? if slide.last?
+  any_questions? if slide.last?
 end
 </code></pre>
 </section>
@@ -335,7 +378,7 @@ module Trialbee::Portal;end
 String.class_eval   { define_method(:last?) { false } }
 NilClass.class_eval { define_method(:last?) { true } }
 define_method(:wait)       { puts 'Still not ready..';sleep 3 }
-define_method(:questions?) { puts 'Any questions?' }
+define_method(:any_questions?) { puts 'Any questions?' }
 define_method(:feedback)   { puts 'Feedback?' }
 class Trialbee::Presenter &lt; Struct.new(:name)
   define_method(:ready?) { Time.now &gt;= DEADLINE }
@@ -349,8 +392,7 @@ end
 </section>
 <section>
 
-<h2>It actually runs <img class="emoji" title=":trollface:" alt=":trollface:" src="https://assets-cdn.github.com/images/icons/emoji/trollface.png" align="absmiddle">
-</h2>
+<h2>It actually runs</h2>
 
 <ul>
 <li><p>Can print the presentation</p></li>
@@ -405,7 +447,7 @@ end
 </section>
 <section>
 
-<h1>Questions?</h1>
+<h1>Any questions?</h1>
 
 <p><img class="natural-image" src="images/tb-logo.png"></p>
 
@@ -421,22 +463,19 @@ end
 </li>
 </ul>
 
-<!-- JS dependencies -->
+<!-- Third party JavaScript dependencies -->
 
-<script src="js/jquery.js"></script>
+<script src="js/libs/jquery.js"></script>
 
-<script src="js/highcharts.js"></script>
+<script src="js/libs/highcharts.js"></script>
 
-<script src="js/chartkick.js"></script>
+<script src="js/libs/chartkick.js"></script>
 
-<script>
-var data = [
-  [174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9],
-  [160.0, 52.0], [166.5, 62.3], [175.3, 68.6], [168.6, 54.1], [168.0, 75.9]
-];
-var options = { xtitle: 'Length (cm)', ytitle: 'Weight (kg)' };
-new Chartkick.ScatterChart("scatter-chart", data, options);
-</script>
+<!-- JavaScript for slides.md -->
+
+<script src="js/scatter-chart.js"></script>
+
+<script src="js/resize-hack.js"></script>
 
 </section>
 

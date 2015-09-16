@@ -11,7 +11,7 @@ wait until author.ready?
 
 author.present(slides) do |slide|
   print slide
-  questions? if slide.last?
+  any_questions? if slide.last?
 end
 ```
 
@@ -28,6 +28,8 @@ end
 * OSS tinkerer
 * Bitcoin.org translator
 * Useless code enthusiast
+
+<hr>
 
 * GitHub: [github.com/buren](https://github.com/buren)
 * Keybase: [keybase.io/buren](https://keybase.io/buren)
@@ -61,6 +63,18 @@ Started out with Java @ LTH.
 * SiteMapper
 * Chartkick.js
 * git-story
+
+```note
+* Track deployments
+
+* Send URLs to Wayback Machine
+
+* Map all links on a site
+
+* JavaScript charting library
+
+* Normalized git environment & utils
+```
 
 ---
 
@@ -108,16 +122,13 @@ Saw my first line of code the first day of uni.
 
 ---
 
-## How I ended up writing..
+## How I ended up writing
 
----
-
-## a Brainfuck interpreter..
+## a `Brainfuck` interpreter..
 
 ---
 
 ## .. in a language that was 22 days old..
-
 
 ---
 
@@ -131,7 +142,7 @@ Saw my first line of code the first day of uni.
 
 ---
 
-Hello world?
+Hello world
 
 ```
 ++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+
@@ -139,19 +150,26 @@ Hello world?
 .--------.>>+.>++.
 ```
 
-Is a very small Turing-complete language..
+Brainfuck is a very small Turing-complete language.
+
+---
+
+### tl;dr:
+### You can program anything with it.
 
 ---
 
 ## Building a Brainfuck intrepreter
 
-Blog post about a new system language called Nim.
-
 ---
 
-I built one in Ruby.
+
+1. I read Brainfuck intrepreter in Nim blog post.
+2. Decided to try to build one in Ruby.
 
 https://github.com/buren/bf-interpreter
+
+<img src="images/github-mark.png" alt="GitHub logo" class="octocat">
 
 ---
 
@@ -188,7 +206,7 @@ GitHub issues is for those how don't know a way of reporting bugs and other issu
 
 ---
 
-Probably not an issue with Java :trollface:
+Probably not an issue with Java..
 
 ---
 
@@ -196,11 +214,11 @@ Probably not an issue with Java :trollface:
 
 ---
 
-<div id="scatter-chart"></div>
+<div id="example-scatter-chart" style="height: 500px; min-width: 310px; max-width: 960px; margin: 0 auto"></div>
 
 ```JavaScript
 var data = [[174.0, 80.0], [176.5, 82.3], ...];
-var options = { xtitle: 'Length (cm)', ytitle: 'Weight (kg)' };
+var options = { xtitle: "Length (cm)", ytitle: "Weight (kg)" };
 new Chartkick.ScatterChart("scatter-chart", data, options);
 ```
 
@@ -208,16 +226,35 @@ new Chartkick.ScatterChart("scatter-chart", data, options);
 
 # GitHub
 
-***
+<img src="images/github-mark.png" alt="GitHub logo" class="octocat">
+
+---
 
 ## At GitHub they have something they call "ombuds".
 
-***
+---
 
 "Someone how advocates the use and understanding of a particular codebase."
 
 - GitHub
 
+---
+
+## Best practies
+
+1. Names are important
+
+```note
+If you don't know what to name it you probably don't know what it is.
+```
+
+---
+
+2. Talk to other about your code (and theirs)
+
+```note
+Discuss different approaches / Pros and cons
+```
 
 ---
 
@@ -228,12 +265,18 @@ Programming in a team yields huge advantages, but also some challenges.
 What is x?
 
 ```ruby
-x =
+x = list.first
+# => anything...
 ```
 
 ---
 
-* How many of you have programmed with others before?
+Tell a story
+
+```ruby
+firstInLine = cashierQueue.first
+# => pretty obvious..
+```
 
 ---
 
@@ -255,7 +298,7 @@ wait until author.ready?
 
 author.present(slides) do |slide|
   print slide
-  questions? if slide.last?
+  any_questions? if slide.last?
 end
 ```
 
@@ -272,7 +315,7 @@ module Trialbee::Portal;end
 String.class_eval   { define_method(:last?) { false } }
 NilClass.class_eval { define_method(:last?) { true } }
 define_method(:wait)       { puts 'Still not ready..';sleep 3 }
-define_method(:questions?) { puts 'Any questions?' }
+define_method(:any_questions?) { puts 'Any questions?' }
 define_method(:feedback)   { puts 'Feedback?' }
 class Trialbee::Presenter < Struct.new(:name)
   define_method(:ready?) { Time.now >= DEADLINE }
@@ -286,7 +329,7 @@ end
 
 ---
 
-## It actually runs :trollface:
+## It actually runs
 
 * Can print the presentation
 
@@ -330,7 +373,7 @@ You really don't need to understand much of it.
 
 ---
 
-# Questions?
+# Any questions?
 
 <img class="natural-image" src="images/tb-logo.png"/>
 
@@ -341,16 +384,11 @@ You really don't need to understand much of it.
 * GitHub: @buren
 * Keybase: [keybase.io/buren](https://keybase.io/buren)
 
-<!-- JS dependencies -->
-<script src="js/jquery.js"></script>
-<script src="js/highcharts.js"></script>
-<script src="js/chartkick.js"></script>
+<!-- Third party JavaScript dependencies -->
+<script src="js/libs/jquery.js"></script>
+<script src="js/libs/highcharts.js"></script>
+<script src="js/libs/chartkick.js"></script>
 
-<script>
-var data = [
-  [174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9],
-  [160.0, 52.0], [166.5, 62.3], [175.3, 68.6], [168.6, 54.1], [168.0, 75.9]
-];
-var options = { xtitle: 'Length (cm)', ytitle: 'Weight (kg)' };
-new Chartkick.ScatterChart("scatter-chart", data, options);
-</script>
+<!-- JavaScript for slides.md -->
+<script src="js/scatter-chart.js"></script>
+<script src="js/resize-hack.js"></script>
