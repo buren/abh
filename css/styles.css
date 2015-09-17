@@ -3,6 +3,14 @@
   text-transform: inherit;
 }
 
+.reveal.page .slides section:not(.stack):before {
+  background: none;
+}
+
+.reveal.page .slides section:not(.stack):after {
+  box-shadow: none;
+}
+
 section.present pre {
   font-size: 0.85em;
 }

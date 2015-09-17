@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
 
-<title>Slides</title>
+<title>Always be hacking - Jacob Burenstam</title>
 
 <meta name="description" content="">
-<meta name="author" content="">
+<meta name="author" content="Jacob Burenstam">
 <meta name="generator" content="reveal-ck 3.2.0">
 
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -15,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 <link rel="stylesheet" href="css/reveal.css">
-<link rel="stylesheet" href="css/theme/league.css" id="theme">
+<link rel="stylesheet" href="css/theme/moon.css" id="theme">
 
 <!-- Code syntax highlighting -->
 <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -49,10 +49,10 @@
 <!-- Bring a TedX "poster" -->
 
 <p><img class="natural-image" src="images/tb-logo.png"></p>
-<pre><code class="ruby">include Trialbee
+<pre><code class="ruby">include LTH
 
 author = Presenter.new(:jacob)
-slides = Portal::Slides.new
+slides = AlwaysBeHacking::Slides.new
 
 wait until author.ready?
 
@@ -225,8 +225,8 @@ please-open github
 <section>
 
 <ol>
-<li>I read Brainfuck intrepreter in Nim blog post.</li>
-<li>Decided to try to build one in Ruby.</li>
+<li>I read a blog post "Writing a Brainfuck intrepreter in Nim [lang]".</li>
+<li>Decided to try to build one in <code>Ruby</code>.</li>
 </ol>
 
 <p><a href="https://github.com/buren/bf-interpreter">https://github.com/buren/bf-interpreter</a></p>
@@ -246,7 +246,7 @@ please-open github
 </section>
 <section>
 
-<p>So I decided to build another Brainfuck intrepreter in his language.</p>
+<p>So I decided to build a Brainfuck intrepreter in his language.</p>
 
 </section>
 <section>
@@ -256,15 +256,88 @@ please-open github
 </section>
 <section>
 
-<p>GitHub Issue #1: "How do I get the nth char of a string?"</p>
+<p>Hit a wall..</p>
+<aside class="notes">I couldn't figure out how to get the nth char of a string..
+</aside>
+</section>
+<section>
 
-<p>"I'm trying to find a way to...? (perhaps I've missed something)"</p>
+<h2>GitHub Issue #1:</h2>
+
+<h3>
+<em>Question</em>: "How do I get the nth char of a string?"</h3>
 <aside class="notes">GitHub issues is for those how don't know a way of reporting bugs and other issues for a repository.
 </aside>
 </section>
 <section>
 
-<h3>"Whoops— I guess I forgot the <code>at()</code> method."</h3>
+<h2>Answer</h2>
+
+<h3>"Whoops— I guess I forgot to add the <code>at()</code> method."</h3>
+
+</section>
+<section>
+
+<div style="margin-top:-150px"></div>
+<pre><code>class Brainfuck
+
+  fn init(code): do
+    self.code     = code
+    self.tape     = []
+    self.code_pos = 0
+    self.tape_pos = 0
+  end
+
+  fn run(skip): do
+    while (self.tape_pos &gt;= 0 &amp;&amp; self.code_pos &lt; self.code.size()): do
+      if (self.tape_pos &gt;= self.tape.size()): self.tape.append(0)
+
+      cond
+        self.code.at(self.code_pos) == "[": self.do_inc(),
+        self.code.at(self.code_pos) == "]": return self.tape.at(self.tape_pos) != 0,
+        !skip:                              self.do_code()
+
+      self.code_pos = self.code_pos + 1
+    end
+  end
+
+  fn do_inc(): do
+    self.code_pos = self.code_pos + 1
+    let old_pos   = self.code_pos
+    while self.run(self.tape.at(self.tape_pos) == 0): do
+      self.code_pos = old_pos
+    end
+  end
+
+  fn do_code(): do
+    let code_char = self.code.at(self.code_pos)
+    cond
+      code_char == "+": self.tape.set_at(self.tape_pos, self.tape.at(self.tape_pos) + 1),
+      code_char == "-": self.tape.set_at(self.tape_pos, self.tape.at(self.tape_pos) - 1),
+      code_char == "&gt;": self.tape_pos = self.tape_pos + 1,
+      code_char == "&lt;": self.tape_pos = self.tape_pos - 1,
+      code_char == ".": self.print_char(self.tape.at(self.tape_pos)),
+      code_char == ",": self.tape.set_at(self.tape_pos, next_char_ord)
+  end
+
+  fn print_char(char): do
+    print(char.chr())
+  end
+
+  fn next_char_ord(): do
+    gets().ord()
+  end
+end
+
+let hello_world = "++++++++[&gt;++++[&gt;++&gt;+++&gt;+++&gt;+&lt;&lt;&lt;&lt;-]&gt;+&gt;+&gt;-&gt;&gt;+[&lt;]&lt;-]&gt;&gt;.&gt;---.+++++++..+++.&gt;&gt;.&lt;-.&lt;.+++.------.--------.&gt;&gt;+.&gt;++."
+new Brainfuck(hello_world).run(false)
+</code></pre>
+</section>
+<section>
+
+<p><a href="https://github.com/buren/vivaldi-bf-interpreter">https://github.com/buren/vivaldi-bf-interpreter</a></p>
+
+<p><img src="images/github-mark.png" alt="GitHub logo" class="octocat"></p>
 
 </section>
 <section>
@@ -274,7 +347,22 @@ please-open github
 </section>
 <section>
 
-<h2>Getting started can be easy</h2>
+<h2>Are any of you following the slides?</h2>
+<aside class="notes">Lets measure your devices latency.
+
+Everyone goto jacobburenstam.com/#/{thisSlideNumber}
+</aside>
+</section>
+<section>
+
+<section data-state="soundcloud-page">
+  <div id="soundcloud"></div>
+</section>
+
+</section>
+<section>
+
+<h2>Something interactive</h2>
 
 </section>
 <section>
@@ -331,16 +419,18 @@ new Chartkick.ScatterChart("scatter-chart", data, options);
 </section>
 <section>
 
-<p>What is x?</p>
+<p>What is happening?</p>
 <pre><code class="ruby">x = list.first
-# =&gt; anything...
+x.order
+# =&gt; order something?...
 </code></pre>
 </section>
 <section>
 
 <p>Tell a story</p>
-<pre><code class="ruby">firstInLine = cashierQueue.first
-# =&gt; pretty obvious..
+<pre><code class="ruby">firstInLine = barQueue.first
+firstInLine.order
+# =&gt; much easier to follow..
 </code></pre>
 </section>
 <section>
@@ -353,10 +443,10 @@ new Chartkick.ScatterChart("scatter-chart", data, options);
 <h2>Is this readable code?</h2>
 
 <p>Remember the code from the first slide?</p>
-<pre><code class="ruby">include Trialbee
+<pre><code class="ruby">include LTH
 
 author = Presenter.new(:jacob)
-slides = Portal::Slides.new
+slides = AlwaysBeHacking::Slides.new
 
 wait until author.ready?
 
@@ -373,31 +463,32 @@ end
 </section>
 <section>
 <pre><code class="ruby">DEADLINE = Time.new(2015, 9, 21, 13, 0, 0).freeze
-module Trialbee;end
-module Trialbee::Portal;end
+module LTH;end
+module LTH::AlwaysBeHacking;end
 String.class_eval   { define_method(:last?) { false } }
 NilClass.class_eval { define_method(:last?) { true } }
 define_method(:wait)       { puts 'Still not ready..';sleep 3 }
 define_method(:any_questions?) { puts 'Any questions?' }
 define_method(:feedback)   { puts 'Feedback?' }
-class Trialbee::Presenter &lt; Struct.new(:name)
+class LTH::Presenter &lt; Struct.new(:name)
   define_method(:ready?) { Time.now &gt;= DEADLINE }
   def present(slides); slides.to_a.each { |slide| yield(slide) };end
 end
-class Trialbee::Portal::Slides
+class LTH::AlwaysBeHacking::Slides
   define_method(:initialize) { @slides = File.read('slides.md').split('---') }
   define_method(:to_a) { @slides + [nil] }
 end
 </code></pre>
+<p>This actually makes the previous code work.</p>
+
 </section>
 <section>
 
-<h2>It actually runs</h2>
-
 <ul>
-<li><p>Can print the presentation</p></li>
-<li><p><a href="https://gist.github.com/buren/21b05c7ccaa9f8896c07">https://gist.github.com/buren/21b05c7ccaa9f8896c07</a></p></li>
+<li><a href="https://gist.github.com/buren/4f7be9d8dc7a0913e2cf">https://gist.github.com/buren/4f7be9d8dc7a0913e2cf</a></li>
 </ul>
+
+<p><img src="images/github-mark.png" alt="GitHub logo" class="octocat"></p>
 
 </section>
 <section>
@@ -442,28 +533,29 @@ end
 </section>
 <section>
 
-<h2>Thank you for listening.</h2>
+<h2>Always be hacking</h2>
+
+<h3>Thank you for listening.</h3>
 
 </section>
 <section>
 
-<h1>Any questions?</h1>
+<h1>Questions?</h1>
 
 <p><img class="natural-image" src="images/tb-logo.png"></p>
 
 </section>
 <section>
 
-<p><img class="natural-image" src="images/tb-logo.png"></p>
+<h2>github.com/buren</h2>
 
-<ul>
-<li>GitHub: <a href="https://github.com/buren" class="user-mention">@buren</a>
-</li>
-<li>Keybase: <a href="https://keybase.io/buren">keybase.io/buren</a>
-</li>
-</ul>
+<h2>keybase.io/buren</h2>
 
-<!-- Third party JavaScript dependencies -->
+<p><img class="natural-image" src="images/tb-logo.png" style="max-width: 300px;"></p>
+
+<!-- JavaScript for slides.md -->
+
+<!-- Third party dependencies -->
 
 <script src="js/libs/jquery.js"></script>
 
@@ -471,11 +563,17 @@ end
 
 <script src="js/libs/chartkick.js"></script>
 
-<!-- JavaScript for slides.md -->
+<!-- JavaScript -->
+
+<script src="js/log.js"></script>
 
 <script src="js/scatter-chart.js"></script>
 
 <script src="js/resize-hack.js"></script>
+
+<script src="js/player.js"></script>
+
+<script src="js/soundcloud-player.js"></script>
 
 </section>
 
@@ -493,7 +591,7 @@ end
     }
   }
   var baseOptions = {
-    transition: 'fade',
+    transition: 'page',
 
     dependencies: [
       { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
