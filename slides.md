@@ -2,10 +2,10 @@
 <img class="natural-image" src="images/tb-logo.png"/>
 
 ```ruby
-include Trialbee
+include LTH
 
 author = Presenter.new(:jacob)
-slides = Portal::Slides.new
+slides = AlwaysBeHacking::Slides.new
 
 wait until author.ready?
 
@@ -206,11 +206,96 @@ GitHub issues is for those how don't know a way of reporting bugs and other issu
 
 ---
 
+<div style="margin-top:-150px"></div>
+
+```
+// Vivaldi version of a Brainfuck interpreter (https://github.com/jeorgun/Vivaldi/)
+//
+// Based of Ruby implementation: https://github.com/buren/bf-interpreter/blob/master/bf.rb
+class Brainfuck
+
+  fn init(code): do
+    self.code     = code
+    self.tape     = []
+    self.code_pos = 0
+    self.tape_pos = 0
+  end
+
+  fn run(skip): do
+    while (self.tape_pos >= 0 && self.code_pos < self.code.size()): do
+      if (self.tape_pos >= self.tape.size()): self.tape.append(0)
+
+      cond
+        self.code.at(self.code_pos) == "[": self.do_inc(),
+        self.code.at(self.code_pos) == "]": return self.tape.at(self.tape_pos) != 0,
+        !skip:                              self.do_code()
+
+      self.code_pos = self.code_pos + 1
+    end
+  end
+
+  fn do_inc(): do
+    self.code_pos = self.code_pos + 1
+    let old_pos   = self.code_pos
+    while self.run(self.tape.at(self.tape_pos) == 0): do
+      self.code_pos = old_pos
+    end
+  end
+
+  fn do_code(): do
+    let code_char = self.code.at(self.code_pos)
+    cond
+      code_char == "+": self.tape.set_at(self.tape_pos, self.tape.at(self.tape_pos) + 1),
+      code_char == "-": self.tape.set_at(self.tape_pos, self.tape.at(self.tape_pos) - 1),
+      code_char == ">": self.tape_pos = self.tape_pos + 1,
+      code_char == "<": self.tape_pos = self.tape_pos - 1,
+      code_char == ".": self.print_char(self.tape.at(self.tape_pos)),
+      code_char == ",": self.tape.set_at(self.tape_pos, next_char_ord)
+  end
+
+  fn print_char(char): do
+    print(char.chr())
+  end
+
+  fn next_char_ord(): do
+    gets().ord()
+  end
+end
+
+let hello_world = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
+new Brainfuck(hello_world).run(false)
+```
+
+---
+
+https://github.com/buren/vivaldi-bf-interpreter
+
+<img src="images/github-mark.png" alt="GitHub logo" class="octocat">
+
+---
+
+
 Probably not an issue with Java..
 
 ---
 
-## Getting started can be easy
+## Are any of you following the slides?
+
+```note
+Lets measure your devices latency.
+
+Everyone goto jacobburenstam.com/#/{thisSlideNumber}
+```
+
+---
+
+<section data-state="soundcloud-page">
+  <div id="soundcloud"></div>
+</section>
+
+---
+
+## Something interactive
 
 ---
 
@@ -289,10 +374,10 @@ What is readable code?
 Remember the code from the first slide?
 
 ```ruby
-include Trialbee
+include LTH
 
 author = Presenter.new(:jacob)
-slides = Portal::Slides.new
+slides = AlwaysBeHacking::Slides.new
 
 wait until author.ready?
 
@@ -310,30 +395,30 @@ end
 
 ```ruby
 DEADLINE = Time.new(2015, 9, 21, 13, 0, 0).freeze
-module Trialbee;end
-module Trialbee::Portal;end
+module LTH;end
+module LTH::AlwaysBeHacking;end
 String.class_eval   { define_method(:last?) { false } }
 NilClass.class_eval { define_method(:last?) { true } }
 define_method(:wait)       { puts 'Still not ready..';sleep 3 }
 define_method(:any_questions?) { puts 'Any questions?' }
 define_method(:feedback)   { puts 'Feedback?' }
-class Trialbee::Presenter < Struct.new(:name)
+class LTH::Presenter < Struct.new(:name)
   define_method(:ready?) { Time.now >= DEADLINE }
   def present(slides); slides.to_a.each { |slide| yield(slide) };end
 end
-class Trialbee::Portal::Slides
+class LTH::AlwaysBeHacking::Slides
   define_method(:initialize) { @slides = File.read('slides.md').split('---') }
   define_method(:to_a) { @slides + [nil] }
 end
 ```
 
+This actually makes the previous code work.
+
 ---
 
-## It actually runs
+* https://gist.github.com/buren/4f7be9d8dc7a0913e2cf
 
-* Can print the presentation
-
-* https://gist.github.com/buren/21b05c7ccaa9f8896c07
+<img src="images/github-mark.png" alt="GitHub logo" class="octocat">
 
 ---
 
@@ -390,5 +475,8 @@ You really don't need to understand much of it.
 <script src="js/libs/chartkick.js"></script>
 
 <!-- JavaScript for slides.md -->
+<script src="js/log.js"></script>
 <script src="js/scatter-chart.js"></script>
 <script src="js/resize-hack.js"></script>
+<script src="js/player.js"></script>
+<script src="js/soundcloud-player.js"></script>
