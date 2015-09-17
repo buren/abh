@@ -164,8 +164,8 @@ Brainfuck is a very small Turing-complete language.
 ---
 
 
-1. I read Brainfuck intrepreter in Nim blog post.
-2. Decided to try to build one in Ruby.
+1. I read a blog post "Writing a Brainfuck intrepreter in Nim [lang]".
+2. Decided to try to build one in `Ruby`.
 
 https://github.com/buren/bf-interpreter
 
@@ -185,7 +185,7 @@ There was a lot of discussion going on. I looked at the language examples which 
 ```
 ---
 
-So I decided to build another Brainfuck intrepreter in his language.
+So I decided to build a Brainfuck intrepreter in his language.
 
 ---
 
@@ -193,25 +193,32 @@ I began hacking..
 
 ---
 
-GitHub Issue #1: "How do I get the nth char of a string?"
+Hit a wall..
 
-"I'm trying to find a way to...? (perhaps I've missed something)"
+```note
+I couldn't figure out how to get the nth char of a string..
+```
+
+---
+
+## GitHub Issue #1:
+
+### _Question_: "How do I get the nth char of a string?"
 
 ```note
 GitHub issues is for those how don't know a way of reporting bugs and other issues for a repository.
 ```
 ---
 
-### "Whoops— I guess I forgot the `at()` method."
+## Answer
+
+### "Whoops— I guess I forgot to add the `at()` method."
 
 ---
 
 <div style="margin-top:-150px"></div>
 
 ```
-// Vivaldi version of a Brainfuck interpreter (https://github.com/jeorgun/Vivaldi/)
-//
-// Based of Ruby implementation: https://github.com/buren/bf-interpreter/blob/master/bf.rb
 class Brainfuck
 
   fn init(code): do
@@ -347,11 +354,12 @@ Programming in a team yields huge advantages, but also some challenges.
 
 ---
 
-What is x?
+What is happening?
 
 ```ruby
 x = list.first
-# => anything...
+x.order
+# => order something?...
 ```
 
 ---
@@ -359,8 +367,9 @@ x = list.first
 Tell a story
 
 ```ruby
-firstInLine = cashierQueue.first
-# => pretty obvious..
+firstInLine = barQueue.first
+firstInLine.order
+# => much easier to follow..
 ```
 
 ---
@@ -454,27 +463,31 @@ You really don't need to understand much of it.
 
 ---
 
-## Thank you for listening.
+## Always be hacking
+
+### Thank you for listening.
 
 ---
 
-# Any questions?
+# Questions?
 
 <img class="natural-image" src="images/tb-logo.png"/>
 
 ---
 
-<img class="natural-image" src="images/tb-logo.png"/>
+## github.com/buren
+## keybase.io/buren
 
-* GitHub: @buren
-* Keybase: [keybase.io/buren](https://keybase.io/buren)
+<img class="natural-image" src="images/tb-logo.png" style="max-width: 300px;"/>
 
-<!-- Third party JavaScript dependencies -->
+<!-- JavaScript for slides.md -->
+
+<!-- Third party dependencies -->
 <script src="js/libs/jquery.js"></script>
 <script src="js/libs/highcharts.js"></script>
 <script src="js/libs/chartkick.js"></script>
 
-<!-- JavaScript for slides.md -->
+<!-- JavaScript -->
 <script src="js/log.js"></script>
 <script src="js/scatter-chart.js"></script>
 <script src="js/resize-hack.js"></script>

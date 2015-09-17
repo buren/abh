@@ -13,18 +13,12 @@ function appendTrollFace() {
 var addSoundcloudPageListener = function() {
   Reveal.addEventListener('soundcloud-page', function() {
       log("Page#soundcloud");
-      var killAfter = 10000;
 
       var url = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/216756926&amp;color=ff5500&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false";
+
+      var killAfter = 10000;
       var playerOptions = { removeCallback: trollPlayer, killAfter: killAfter };
       var player = initPlayer("#soundcloud", url, playerOptions);
-
-      var seconds = function(ms){ return ms * 1000; };
-      setTimeout(function() {
-        for (var i = 1; i < 30; i++) {
-          setTimeout(appendTrollFace, seconds(i / 5));
-        }
-      }, 4000);
 
       var afterIframe = '<h3>LTH webpage</h3><iframe src="http://www.lth.se/" width="100%" height="760" frameborder="0"></iframe>';
       setTimeout(function() {
