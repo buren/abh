@@ -52,6 +52,7 @@ Started out with Java @ LTH.
 
 * Ruby
 * JavaScript
+* Elixir
 * Clojure
 
 ---
@@ -306,13 +307,22 @@ Everyone goto jacobburenstam.com/#/{thisSlideNumber}
 
 ---
 
-<div id="example-scatter-chart" style="height: 500px; min-width: 310px; max-width: 960px; margin: 0 auto"></div>
-
-```JavaScript
-var data = [[174.0, 80.0], [176.5, 82.3], ...];
-var options = { xtitle: "Length (cm)", ytitle: "Weight (kg)" };
-new Chartkick.ScatterChart("scatter-chart", data, options);
+```html
+<input type="text" id="weight" name="weight", placeholder="Weight (kg)">
+<input type="text" id="height" name="height", placeholder="Height (cm)">
+<div id="example-scatter-chart"></div>
+<script>
+// TODO: Update to fetch from URL
+var data = [[174.0, 80.0], [176.5, 82.3]];
+new Chartkick.ScatterChart("scatter-chart", data);
+</script>
 ```
+
+---
+
+<input type="text" id="weight" name="weight", placeholder="Weight (kg)">
+<input type="text" id="height" name="height", placeholder="Height (cm)">
+<div id="example-scatter-chart" style="height: 500px; min-width: 310px; max-width: 960px; margin: 0 auto"></div>
 
 ---
 
@@ -406,11 +416,11 @@ end
 DEADLINE = Time.new(2015, 9, 21, 13, 0, 0).freeze
 module LTH;end
 module LTH::AlwaysBeHacking;end
-String.class_eval   { define_method(:last?) { false } }
+String.class_eval { define_method(:last?) { false } }
 NilClass.class_eval { define_method(:last?) { true } }
-define_method(:wait)       { puts 'Still not ready..';sleep 3 }
+define_method(:wait) { puts 'Still not ready..';sleep 3 }
 define_method(:any_questions?) { puts 'Any questions?' }
-define_method(:feedback)   { puts 'Feedback?' }
+define_method(:feedback) { puts 'Feedback?' }
 class LTH::Presenter < Struct.new(:name)
   define_method(:ready?) { Time.now >= DEADLINE }
   def present(slides); slides.to_a.each { |slide| yield(slide) };end
