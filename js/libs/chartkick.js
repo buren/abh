@@ -1,8 +1,9 @@
 /*
  * Chartkick.js
  * Create beautiful Javascript charts with minimal code
- * https://github.com/ankane/chartkick.js
- * v1.4.1
+ * Original: https://github.com/ankane/chartkick.js
+ * Fork: https://github.com/buren/chartkick.js
+ * v1.4.0-buren
  * MIT License
  */
 
@@ -11,7 +12,15 @@
 (function (window) {
   'use strict';
 
-  var config = window.Chartkick || {};
+  var DEFAULT_OPTIONS = {
+    lineChart: {
+      marker: {
+        maxPoints: Infinity
+      }
+    }
+  };
+
+  var config = merge(DEFAULT_OPTIONS, window.Chartkick || {});
   var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, adapters = [];
 
   // helpers
@@ -26,6 +35,10 @@
 
   function isPlainObject(variable) {
     return !isFunction(variable) && variable instanceof Object;
+  }
+
+  function isRemoteUrl(dataSource) {
+    return typeof dataSource === "string";
   }
 
   // https://github.com/madrobby/zepto/blob/master/src/zepto.js
@@ -101,7 +114,7 @@
     return false;
   }
 
-  function jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle) {
+  function jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setHAxisTitle, setVAxisTitle) {
     return function (series, opts, chartOptions) {
       var options = merge({}, defaultOptions);
       options = merge(options, chartOptions || {});
@@ -120,24 +133,28 @@
       }
 
       // max
-      if (opts.max) {
+      if ("max" in opts) {
         setMax(options, opts.max);
       }
 
-      if (opts.stacked) {
+      if ("stacked" in opts) {
         setStacked(options);
       }
 
-      if (opts.colors) {
+      if ("colors" in opts) {
         options.colors = opts.colors;
       }
 
-      if (opts.xtitle) {
-        setXtitle(options, opts.xtitle);
+      if ("dateFormat" in opts) {
+        options.dateFormat = opts.dateFormat;
       }
 
-      if (opts.ytitle) {
-        setYtitle(options, opts.ytitle);
+      if ("hAxisTitle" in opts) {
+        setHAxisTitle(options, opts.hAxisTitle);
+      }
+
+      if ("vAxisTitle" in opts) {
+        setVAxisTitle(options, opts.vAxisTitle);
       }
 
       // merge library last
@@ -183,7 +200,7 @@
   }
 
   function fetchDataSource(chart, callback) {
-    if (typeof chart.dataSource === "string") {
+    if (isRemoteUrl(chart.dataSource)) {
       getJSON(chart.element, chart.dataSource, function (data, textStatus, jqXHR) {
         chart.data = data;
         errorCatcher(chart, callback);
@@ -244,9 +261,6 @@
       var defaultOptions = {
         chart: {},
         xAxis: {
-          title: {
-            text: null
-          },
           labels: {
             style: {
               fontSize: "12px"
@@ -301,15 +315,15 @@
         options.plotOptions.series.stacking = "normal";
       };
 
-      var setXtitle = function (options, title) {
-        options.xAxis.title.text = title;
+      var setHAxisTitle = function (options, title) {
+        options.xAxis = {title: {text: title}};
       };
 
-      var setYtitle = function (options, title) {
-        options.yAxis.title.text = title;
+      var setVAxisTitle = function (options, title) {
+        options.yAxis = {title: {text: title}}
       };
 
-      var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle);
+      var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setHAxisTitle, setVAxisTitle);
 
       this.renderLineChart = function (chart, chartType) {
         chartType = chartType || "spline";
@@ -334,6 +348,7 @@
         options.chart.renderTo = chart.element.id;
 
         var series = chart.data;
+        var maxMarkerPoints;
         for (i = 0; i < series.length; i++) {
           data = series[i].data;
           if (!chart.options.discrete) {
@@ -341,9 +356,28 @@
               data[j][0] = data[j][0].getTime();
             }
           }
-          series[i].marker = {symbol: "circle"};
+          maxMarkerPoints = series[i].maxMarkerPoints || chart.options.maxMarkerPoints || config.lineChart.marker.maxPoints;
+          series[i].marker = {
+            symbol: series[i].marker || "circle",
+            enabled: maxMarkerPoints >= data.length // Don't display markers if there are too many data points
+          };
         }
         options.series = series;
+        if (options.dateFormat) {
+          options.xAxis.labels.formatter = function (){
+            return Highcharts.dateFormat(options.dateFormat, this.value);
+          };
+        }
+        new Highcharts.Chart(options);
+      };
+
+      this.renderScatterChart = function (chart) {
+        var chartOptions = {};
+        var options = jsOptions(chart.data, chart.options, chartOptions);
+        options.chart.type = 'scatter';
+        options.chart.renderTo = chart.element.id;
+        var data = chart.data;
+        options.series = chart.data;
         new Highcharts.Chart(options);
       };
 
@@ -408,6 +442,52 @@
           newSeries.push({
             name: series[i].name,
             data: d
+          });
+        }
+        options.series = newSeries;
+
+        new Highcharts.Chart(options);
+      };
+
+      this.renderComboChart = function (chart, chartType) {
+        var chartType = chartType || "column";
+        var series = chart.data;
+        var types = chart.options.types;
+        var options = jsOptions(series, chart.options), i, j, s, d, rows = [];
+        // options.chart.type = chartType;
+        options.chart.renderTo = chart.element.id;
+
+        for (i = 0; i < series.length; i++) {
+          s = series[i];
+
+          for (j = 0; j < s.data.length; j++) {
+            d = s.data[j];
+            if (!rows[d[0]]) {
+              rows[d[0]] = new Array(series.length);
+            }
+            rows[d[0]][i] = d[1];
+          }
+        }
+
+        var categories = [];
+        for (i in rows) {
+          if (rows.hasOwnProperty(i)) {
+            categories.push(i);
+          }
+        }
+        options.xAxis.categories = categories;
+
+        var newSeries = [];
+        for (i = 0; i < series.length; i++) {
+          d = [];
+          for (j = 0; j < categories.length; j++) {
+            d.push(rows[categories[j]][i] || 0);
+          }
+
+          newSeries.push({
+            name: series[i].name,
+            data: d,
+            type: types[i]
           });
         }
         options.series = newSeries;
@@ -493,7 +573,6 @@
             color: "#666",
             fontSize: 12
           },
-          titleTextStyle: {},
           gridlines: {
             color: "transparent"
           },
@@ -505,7 +584,6 @@
             color: "#666",
             fontSize: 12
           },
-          titleTextStyle: {},
           baselineColor: "#ccc",
           viewWindow: {}
         },
@@ -541,17 +619,15 @@
         options.isStacked = true;
       };
 
-      var setXtitle = function (options, title) {
-        options.hAxis.title = title;
-        options.hAxis.titleTextStyle.italic = false;
+      var setHAxisTitle = function (options, title) {
+        options.hAxis = {title: title};
       }
 
-      var setYtitle = function (options, title) {
-        options.vAxis.title = title;
-        options.vAxis.titleTextStyle.italic = false;
+      var setVAxisTitle = function (options, title) {
+        options.vAxis = {title: title};
       };
 
-      var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle);
+      var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setHAxisTitle, setVAxisTitle);
 
       // cant use object as key
       var createDataTable = function (series, columnType) {
@@ -608,6 +684,21 @@
         waitForLoaded(function () {
           var options = jsOptions(chart.data, chart.options);
           var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
+          // Date formatting wont work if chart discrete options set to true
+          if (options.dateFormat) {
+            var formatter = new google.visualization.DateFormat({
+              pattern: options.dateFormat
+            });
+            formatter.format(data, 0);
+            options.hAxis.format = options.dateFormat;
+          }
+          var maxMarkerPoints = chart.options.maxMarkerPoints || config.lineChart.marker.maxPoints;
+          // Don't display markers if there are too many data points
+          var enabled = maxMarkerPoints >= data.getNumberOfRows();
+          if (!enabled) {
+            options.pointSize = 0;
+          }
+
           chart.chart = new google.visualization.LineChart(chart.element);
           resize(function () {
             chart.chart.draw(data, options);
@@ -645,6 +736,30 @@
           var options = jsOptions(chart.data, chart.options);
           var data = createDataTable(chart.data, "string");
           chart.chart = new google.visualization.ColumnChart(chart.element);
+          resize(function () {
+            chart.chart.draw(data, options);
+          });
+        });
+      };
+
+      this.renderComboChart = function (chart) {
+        waitForLoaded(function () {
+          var i, type, seriesOptions = [];
+          var types = chart.options.types;
+
+          for (i = 0; i < types.length; i++) {
+            type = types[i];
+            if(type == "column"){
+              type = "bars";
+            }
+            seriesOptions.push({type: type});
+          }
+          var chartOptions = {
+            series: seriesOptions
+          };
+          var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked)(chart.data, chart.options, chartOptions);
+          var data = createDataTable(chart.data, "string");
+          chart.chart = new google.visualization.ComboChart(chart.element);
           resize(function () {
             chart.chart.draw(data, options);
           });
@@ -840,6 +955,11 @@
     renderChart("ColumnChart", chart);
   }
 
+  function processComboData(chart) {
+    chart.data = processSeries(chart.data, chart.options, false);
+    renderChart("ComboChart", chart);
+  }
+
   function processPieData(chart) {
     chart.data = processSimple(chart.data);
     renderChart("PieChart", chart);
@@ -870,6 +990,14 @@
     renderChart("Timeline", chart);
   }
 
+  function Repeater(callback, timeout) {
+    var self = this;
+    var update = callback;
+
+    self.runner = setInterval(function () { update(); }, timeout);
+    self.stop = function () { clearInterval(self.runner); };
+  };
+
   function setElement(chart, element, dataSource, opts, callback) {
     if (typeof element === "string") {
       element = document.getElementById(element);
@@ -879,6 +1007,8 @@
     chart.dataSource = dataSource;
     Chartkick.charts[element.id] = chart;
     fetchDataSource(chart, callback);
+
+    Chartkick.setRefresh(element.id, chart.options.refresh);
   }
 
   // define classes
@@ -896,6 +1026,9 @@
     BarChart: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processBarData);
     },
+    ComboChart: function (element, dataSource, opts) {
+      setElement(this, element, dataSource, opts, processComboData);
+    },
     AreaChart: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processAreaData);
     },
@@ -908,7 +1041,64 @@
     Timeline: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processTimelineData);
     },
-    charts: {}
+    repeaters: {},
+    setRefresh: function(chartId, refreshInterval) {
+      if (refreshInterval && !Chartkick.repeaters[chartId]) {
+        Chartkick.repeaters[chartId] = new Repeater(function() {
+          Chartkick.updateChart(chartId);
+        }, refreshInterval);
+      }
+    },
+    stopRefresh: function(chartId) {
+      Chartkick.repeaters[chartId].stop();
+      Chartkick.repeaters[chartId] = null;
+    },
+    charts: {},
+    updateChart: function(chartId, dataSource, opts) {
+      var chart = Chartkick.charts[chartId];
+      var options;
+      var source;
+      if (chart === undefined) {
+        throw new Error("No chart found with id: " + chartId);
+      }
+
+      source = dataSource || chart.dataSource;
+      options = opts ? merge(chart.options, opts) : chart.options;
+
+      new chart.__proto__.constructor(chart.element.id, source, options);
+    },
+    updateAllCharts: function(callback) {
+      var charts = Chartkick.charts;
+      var chart;
+      var isRemote;
+      var chartProps;
+
+      var setChartProps = function(obj) {
+        var data = obj.data;
+        var opts = obj.options || {};
+
+        // If there is no data and options properties assume that obj is the data
+        if (!data && !opts) {
+          data = obj;
+        }
+
+        return {
+          options: opts,
+          data: data
+        };
+      }
+
+      for (var chartId in charts) {
+        chart = charts[chartId];
+        isRemote = isRemoteUrl(chart.dataSource);
+        if (isFunction(callback)) {
+          chartProps = setChartProps(callback(chart, isRemote));
+          Chartkick.updateChart(chartId, chartProps.data, chartProps.options);
+        } else if (isRemote) {
+          Chartkick.updateChart(chartId, chart.dataSource);
+        }
+      }
+    }
   };
 
   window.Chartkick = Chartkick;
