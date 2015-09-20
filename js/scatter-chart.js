@@ -3,25 +3,28 @@
 //
 // Depends on: chartkick.js, highcharts.js
 
+// Server address for weight/height data
+WEIGHT_CHART_URL = SERVER_ADDR + '/weight_height_chart';
 
 // Element id as defined in slides.md
 var elementId = "example-scatter-chart";
 
-// Some example data: [Lenght (cm), Weight (kg)]
-var data = [
-  [174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9],
-  [160.0, 52.0], [166.5, 62.3], [175.3, 68.6], [168.6, 54.1], [168.0, 75.9]
-];
-
+// Don't animate plotting
+var libraryOptions =  { plotOptions: { scatter: { animation: false } } };
 // Display options for the chart
 var options = {
-  xtitle: "Length (cm)", // x-axis title
-  ytitle: "Weight (kg)", // y-axis title
-  min: 40                // min y-value
+  vAxisTitle: "Length (cm)", // y-axis title
+  hAxisTitle: "Weight (kg)", // x-axis title
+  min: 40,                   // min y-value,
+  refresh: 4000,             // Refresh chart every 4th second
+  library: libraryOptions    // HighCharts options
 };
 
+// Server address for the chart data
+var dataSource = WEIGHT_CHART_URL;
+// var dataSource = 'https://abh-server.herokuapp.com';
 // Initialize the chart passing:
 //    elementId: The element defined in slides.md
-//    data: The data points for the chart
+//    dataSource: The data source for chart points
 //    options: Chart display options
-new Chartkick.ScatterChart(elementId, data, options);
+new Chartkick.ScatterChart(elementId, dataSource, options);
