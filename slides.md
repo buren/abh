@@ -60,15 +60,18 @@ Thank you for letting me be here!
 
 ## Jacob Burenstam
 
-* Full stack developer @ Trialbee
+__Full stack developer__
+
 * Open source tinkerer
 * Bitcoin.org translator
 * Useless code enthusiast
 
 <hr>
 
-* GitHub: [github.com/buren](https://github.com/buren)
-* Keybase: [keybase.io/buren](https://keybase.io/buren)
+* [github.com/buren](https://github.com/buren)
+* [keybase.io/buren](https://keybase.io/buren)
+
+<img class="natural-image" src="images/tb-logo.png" style="max-width: 300px;"/>
 
 ---
 
@@ -259,20 +262,20 @@ This actually makes the previous code work :trollface:
 
 ---
 
-* https://gist.github.com/buren/4f7be9d8dc7a0913e2cf
+* [http://git.io/vnWsf](http://git.io/vnWsf)
 
 <img src="images/github-mark.png" alt="GitHub logo" class="octocat">
 
 ---
 
-```html
-<div id="scatter-chart"></div>
-```
+## 5 lines of HTML
 
-```JavaScript
-var id = "scatter-chart";
-var url = "https://abh-server.herokuapp.com/weight_height_chart";
-new Chartkick.ScatterChart(id, url);
+```html
+<div id="chart"></div>
+<script>
+var data = [[180, 92], [190, 80]];
+new Chartkick.ScatterChart("chart", data);
+</script>
 ```
 
 ---
