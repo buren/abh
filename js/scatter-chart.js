@@ -7,14 +7,14 @@
 WEIGHT_CHART_URL = SERVER_ADDR + '/weight_height_chart';
 
 // Element id as defined in slides.md
-var elementId = "example-scatter-chart";
+var elementId = 'example-scatter-chart';
 
 // Don't animate plotting
 var libraryOptions =  { plotOptions: { scatter: { animation: false } } };
 // Display options for the chart
-var options = {
-  vAxisTitle: "Length (cm)", // y-axis title
-  hAxisTitle: "Weight (kg)", // x-axis title
+var scatterOptions = {
+  vAxisTitle: 'Length (cm)', // y-axis title
+  hAxisTitle: 'Weight (kg)', // x-axis title
   min: 40,                   // min y-value,
   refresh: 4000,             // Refresh chart every 4th second
   library: libraryOptions    // HighCharts options
@@ -27,4 +27,4 @@ var dataSource = WEIGHT_CHART_URL;
 //    elementId: The element defined in slides.md
 //    dataSource: The data source for chart points
 //    options: Chart display options
-new Chartkick.ScatterChart(elementId, dataSource, options);
+new Chartkick.ScatterChart(elementId, dataSource, scatterOptions);

@@ -3,8 +3,8 @@ var WEIGHT_HEIGHT_POST_URL = SERVER_ADDR + '/weight_height';
 // Form selector
 SCATTER_SUBMIT_SELECTOR = '#scatter-form';
 // Input selectors
-WEIGHT_SELECTOR = '#weight';
-HEIGHT_SELECTOR = '#height';
+WEIGHT_SELECTOR = '#weight'; // Weight input
+HEIGHT_SELECTOR = '#height'; // Height input
 SCATTER_INPUTS_SELECTOR = [WEIGHT_SELECTOR, HEIGHT_SELECTOR].join(', ');
 
 // On clicking the "Submit" button
