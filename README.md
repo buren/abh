@@ -1,6 +1,6 @@
 # Always be hacking - Slides
 
-_Note_: The slides come with an open source server implementation. You can deploy it with one click over at [buren/abh-server](https://github.com/buren.abh-server), in a few minutes, without any additional configuration.
+_Note_: The slides come with an open source server implementation. You can deploy it with one click over at [buren/poller-server](https://github.com/buren/poller-server), in a few minutes, without any additional configuration.
 
 ## Getting started
 
